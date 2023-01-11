@@ -1,6 +1,6 @@
 <?php
 
-namespace Ildarik081\TimeHelper;
+namespace Ildarik081;
 
 use DateTime;
 
