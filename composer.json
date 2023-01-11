@@ -1,0 +1,20 @@
+{
+    "name": "ildarik081/time-helper",
+    "description": "Библиотека для форматирования даты и времени",
+    "license" : "MIT",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Ildarik081\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ildarik081",
+            "email": "ildarik081@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    }
+}
