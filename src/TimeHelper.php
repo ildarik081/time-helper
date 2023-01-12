@@ -6,7 +6,6 @@ use DateTime;
 
 final class TimeHelper
 {
-    private static ?self $instance = null;
     private DateTime $dateTime;
     private string $todayStr = 'Сегодня';
     private string $yesterdayStr = 'Вчера';
@@ -35,11 +34,11 @@ final class TimeHelper
         if ($format === self::STRDATE) {
             $this->dateTime = $this->parse($date);
         } elseif (is_string($date)) {
-            $this->dateTime = DateTime::createFromFormat($format, $date);
-        } elseif (is_a($date, 'DateTime')) {
+            $this->dateTime = new DateTime($date);
+        } elseif ($date instanceof DateTime) {
             $this->dateTime = $date;
         } else {
-            $this->dateTime = new DateTime;
+            $this->dateTime = new DateTime();
         }
 
         return $this;
@@ -64,13 +63,7 @@ final class TimeHelper
      */
     public static function create(?string $date, string $format = self::DATETIME): self
     {
-        if (null !== self::$instance) {
-            return self::$instance;
-        }
-
-        self::$instance = new self($date, $format);
-
-        return self::$instance;
+        return new self($date, $format);
     }
 
     /**
@@ -120,7 +113,7 @@ final class TimeHelper
             $dateStr = $result['year'] . '-' . $result['month'] . '-' . $result['day'] . ' ' . $result['time'];
         }
 
-        return DateTime::createFromFormat(self::DATETIME, $dateStr);
+        return new DateTime($dateStr);
     }
 
     /**
