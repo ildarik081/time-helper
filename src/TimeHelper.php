@@ -4,31 +4,31 @@ namespace Ildarik081;
 
 use DateTime;
 
-class TimeHelper
+final class TimeHelper
 {
+    private static ?self $instance = null;
     private DateTime $dateTime;
-    protected string $todayStr = 'Сегодня';
-    protected string $yesterdayStr = 'Вчера';
-    protected string $tomorrowStr = 'Завтра';
-    protected array $month = [
+    private string $todayStr = 'Сегодня';
+    private string $yesterdayStr = 'Вчера';
+    private string $tomorrowStr = 'Завтра';
+    private array $month = [
         'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
         'Октябрь', 'Ноябрь', 'Декабрь'
     ];
-    protected array $monthPlural = [
+    private array $monthPlural = [
         'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа',
         'Сентября', 'Октября', 'Ноября', 'Декабря'
     ];
-    protected array $shortMonth = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-    protected array $day = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресение'];
-    protected array $shortDay = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    private array $shortMonth = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+    private array $day = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресение'];
+    private array $shortDay = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
-    protected const DATETIME = 'Y-m-d H:i:s';
-    protected const DATE = 'Y-m-d';
-    protected const EUR_DATETIME = 'd.m.Y H:i:s';
-    protected const EUR_DATE = 'd.m.Y';
-    protected const STRDATE = 'd month year time';
+    private const DATETIME = 'Y-m-d H:i:s';
+    private const DATE = 'Y-m-d';
+    private const EUR_DATETIME = 'd.m.Y H:i:s';
+    private const STRDATE = 'd month year time';
 
-    function __construct(?string $date = null, string $format = self::DATETIME)
+    private function __construct(?string $date, string $format = self::DATETIME)
     {
         mb_internal_encoding('UTF-8');
 
@@ -62,9 +62,15 @@ class TimeHelper
      * @param string $format
      * @return self
      */
-    public static function create(?string $date = null, string $format = self::DATETIME): self
+    public static function create(?string $date, string $format = self::DATETIME): self
     {
-        return new self($date, $format);
+        if (null !== self::$instance) {
+            return self::$instance;
+        }
+
+        self::$instance = new self($date, $format);
+
+        return self::$instance;
     }
 
     /**
