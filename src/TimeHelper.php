@@ -58,7 +58,7 @@ final class TimeHelper
         return new self($date);
     }
 
-        /**
+    /**
      * Изменение даты
      *
      * @param int $day
@@ -213,7 +213,7 @@ final class TimeHelper
 
     /**
      * Получить день недели
-     * 
+     *
      * Пример:
      * - Пятница
      * - ПТ (_$short = true_)
