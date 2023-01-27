@@ -22,3 +22,16 @@ jobs:
         uses: chindit/actions-phpcs@master
         with:
           dir: src/
+
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          tools: phpmd
+
+      - name: Run PHPMD
+        run: phpmd src text --exclude src/Kernel.php controversial,./phpmd.xml
