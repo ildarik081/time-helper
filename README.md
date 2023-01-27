@@ -11,7 +11,6 @@ composer req ildarik081/time-helper
 
 ### Использование
 ```php
-<?php
 use Ildarik081\TimeHelper;
 
 // Получить дату в строковом формате: Сегодня, Завтра, Вчера, 27 Января 2023
@@ -31,5 +30,4 @@ TimeHelper::getInstance('2023-01-27 20:31:00')->dayWeek();
 
 // Модифицировать дату и получить в строковом формате: Январь
 TimeHelper::getInstance('2023-01-27 20:31:00')->month(false);
-
 ```
