@@ -1,0 +1,51 @@
+name: Code analyze
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+
+jobs:	
+  phpcs:
+    name: PHPCS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: PHPCS
+        uses: chindit/actions-phpcs@master
+        with:
+          dir: src/
+
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          tools: phpmd
+
+      - name: Run PHPMD
+        run: phpmd src text --exclude src/Kernel.php controversial,./phpmd.xml
+
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: composer ins --prefer-dist --no-progress --no-suggest
+
+      - name: PHPStan
+        uses: chindit/actions-phpstan@master
+        with:
+          arguments: 'src/ --level=7'
